@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Backrow Boys — guest wifi card</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;700&family=Public+Sans:wght@400;600&display=swap">
+<style>
+  @page { size: 5in 7in; margin: 0; }
+
+  :root {
+    --ink:    #15171F;
+    --muted:  #6C6A62;
+    --accent: #D9931A;
+    --line:   #D6D3CA;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    width: 5in;
+    height: 7in;
+    background: #FFFFFF;
+    color: var(--ink);
+    font-family: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .card {
+    width: 5in;
+    height: 7in;
+    padding: 0.4in 0.45in 0.35in;   /* safe area inside the 5x7 trim */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* --- signature line --- */
+  .card > * { flex: none; }
+
+  .sig {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .rule {
+    width: 100%;
+    height: 2px;
+    background: var(--ink);
+    margin-top: 0.1in;
+  }
+
+  /* --- headline --- */
+  h1 {
+    font-family: Anton, "Arial Narrow", Impact, sans-serif;
+    font-weight: 400;
+    font-size: 44pt;
+    line-height: 0.96;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    margin: 0.28in 0 0;
+  }
+
+  .sub {
+    font-size: 10pt;
+    line-height: 1.4;
+    color: var(--muted);
+    margin: 0.11in 0 0;
+  }
+
+  /* --- QR --- */
+  .qr {
+    width: 2.4in;
+    height: 2.4in;
+    margin-top: 0.26in;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qr svg { width: 100%; height: 100%; display: block; }
+
+  /* --- network --- */
+  .network { margin-top: 0.22in; }
+  .network .label {
+    font-family: "Public Sans", sans-serif;
+    font-size: 7.5pt;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .network .ssid {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 15pt;
+    font-weight: 700;
+    margin-top: 0.05in;
+  }
+
+  /* --- footer: the three seats --- */
+  .foot {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.11in;
+  }
+  .seats { display: flex; gap: 5px; }
+  .seats span {
+    width: 26px;
+    height: 16px;
+    border-radius: 2px;
+    background: var(--accent);
+    display: block;
+  }
+  .foot .who {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 7.5pt;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="sig">The Backrow Boys</div>
+    <div class="rule"></div>
+
+    <h1>Guest<br>Wifi</h1>
+    <p class="sub">Point a camera at the code.<br>The phone joins on its own.</p>
+
+    <div class="qr" id="qr"></div>
+
+    <div class="network">
+      <div class="label">Network</div>
+      <div class="ssid">Plastic Labs-Guest</div>
+    </div>
+
+    <div class="foot">
+      <div class="seats"><span></span><span></span><span></span></div>
+      <div class="who">Matt · Aakash · Marc — row 3</div>
+    </div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+  var WIFI = {
+    ssid: "Plastic Labs-Guest",
+    password: "Carwash-Shriek-Petite-Underarm-Renewable",
+    security: "WPA"
+  };
+  function esc(s) { return String(s).replace(/([\;,:"])/g, "\\$1"); }
+  var payload = "WIFI:T:" + WIFI.security + ";S:" + esc(WIFI.ssid) + ";P:" + esc(WIFI.password) + ";;";
+  var qr = qrcode(0, "H");          // high error correction — it's going on a wall
+  qr.addData(payload);
+  qr.make();
+  document.getElementById("qr").innerHTML = qr.createSvgTag({ cellSize: 8, margin: 0, scalable: true });
+</script>
+</body>
+</html>
