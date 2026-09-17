@@ -77,8 +77,8 @@
 
   /* --- QR --- */
   .qr {
-    width: 2.4in;
-    height: 2.4in;
+    width: 2.3in;
+    height: 2.3in;
     margin-top: 0.26in;
     display: flex;
     align-items: center;
@@ -101,6 +101,13 @@
     font-size: 15pt;
     font-weight: 700;
     margin-top: 0.05in;
+  }
+
+  .network .link {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 9pt;
+    color: var(--muted);
+    margin-top: 0.07in;
   }
 
   /* --- footer: the three seats --- */
@@ -135,13 +142,14 @@
     <div class="rule"></div>
 
     <h1>Guest<br>Wifi</h1>
-    <p class="sub">Point a camera at the code,<br>or type the link.</p>
+    <p class="sub">Scan the code to get on the wifi.</p>
 
     <div class="qr" id="qr"></div>
 
     <div class="network">
-      <div class="label">Then tap the wifi code</div>
-      <div class="ssid">backrowboys.fun</div>
+      <div class="label">Network</div>
+      <div class="ssid">Plastic Labs-Guest</div>
+      <div class="link">backrowboys.fun</div>
     </div>
 
     <div class="foot">
