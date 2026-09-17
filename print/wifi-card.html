@@ -135,13 +135,13 @@
     <div class="rule"></div>
 
     <h1>Guest<br>Wifi</h1>
-    <p class="sub">Point a camera at the code.<br>The phone joins on its own.</p>
+    <p class="sub">Point a camera at the code,<br>or type the link.</p>
 
     <div class="qr" id="qr"></div>
 
     <div class="network">
-      <div class="label">Network</div>
-      <div class="ssid">Plastic Labs-Guest</div>
+      <div class="label">Then tap the wifi code</div>
+      <div class="ssid">backrowboys.fun</div>
     </div>
 
     <div class="foot">
@@ -152,14 +152,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script>
-  var WIFI = {
-    ssid: "Plastic Labs-Guest",
-    password: "Carwash-Shriek-Petite-Underarm-Renewable",
-    security: "WPA"
-  };
-  function esc(s) { return String(s).replace(/([\;,:"])/g, "\\$1"); }
-  var payload = "WIFI:T:" + WIFI.security + ";S:" + esc(WIFI.ssid) + ";P:" + esc(WIFI.password) + ";;";
-  var qr = qrcode(0, "H");          // high error correction — it's going on a wall
+  var payload = "http://backrowboys.fun";
+  var qr = qrcode(0, "H");   // high error correction — it's going on a wall
   qr.addData(payload);
   qr.make();
   document.getElementById("qr").innerHTML = qr.createSvgTag({ cellSize: 8, margin: 0, scalable: true });
