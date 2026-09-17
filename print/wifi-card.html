@@ -60,7 +60,7 @@
   h1 {
     font-family: Anton, "Arial Narrow", Impact, sans-serif;
     font-weight: 400;
-    font-size: 44pt;
+    font-size: 40pt;
     line-height: 0.96;
     letter-spacing: 0.01em;
     text-transform: uppercase;
@@ -76,9 +76,9 @@
 
   /* --- QR --- */
   .qr {
-    width: 2.85in;
-    height: 2.85in;
-    margin-top: 0.3in;
+    width: 2.15in;
+    height: 2.15in;
+    margin-top: 0.24in;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,7 +86,7 @@
   .qr svg { width: 100%; height: 100%; display: block; }
 
   /* --- network --- */
-  .network { margin-top: 0.22in; }
+  .network { margin-top: 0.2in; }
   .network .label {
     font-family: "Public Sans", sans-serif;
     font-size: 7.5pt;
@@ -116,20 +116,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.11in;
+    gap: 0.09in;
   }
-  .seats { display: flex; gap: 5px; }
-  .seats span {
-    width: 26px;
-    height: 16px;
-    border-radius: 2px;
-    background: var(--accent);
-    display: block;
+  .foot .divider {
+    width: 1.1in;
+    height: 1px;
+    background: var(--line);
   }
-  .foot .who {
+  .qr2 { width: 0.92in; height: 0.92in; }
+  .qr2 svg { width: 100%; height: 100%; display: block; }
+  .foot .then {
     font-family: "JetBrains Mono", ui-monospace, monospace;
     font-size: 7.5pt;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--muted);
   }
@@ -150,7 +149,9 @@
     </div>
 
     <div class="foot">
-      <div class="seats"><span></span><span></span><span></span></div>
+      <div class="divider"></div>
+      <div class="qr2" id="qr2"></div>
+      <div class="then">Then scan this one</div>
     </div>
   </div>
 
@@ -163,10 +164,17 @@
   };
   function esc(s) { return String(s).replace(/([\\;,:"])/g, "\\$1"); }
   var payload = "WIFI:T:" + WIFI.security + ";S:" + esc(WIFI.ssid) + ";P:" + esc(WIFI.password) + ";;";
-  var qr = qrcode(0, "H");   // high error correction — it's going on a wall
+  // Q (25% recovery) keeps the dense wifi payload from needing a huge code.
+  var qr = qrcode(0, "Q");
   qr.addData(payload);
   qr.make();
   document.getElementById("qr").innerHTML = qr.createSvgTag({ cellSize: 8, margin: 0, scalable: true });
+
+  // The short URL stays sparse even at level H, so it survives being small.
+  var qr2 = qrcode(0, "H");
+  qr2.addData("http://backrowboys.fun");
+  qr2.make();
+  document.getElementById("qr2").innerHTML = qr2.createSvgTag({ cellSize: 8, margin: 0, scalable: true });
 </script>
 </body>
 </html>
