@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Backrow Boys — guest wifi card</title>
+<title>Guest Wifi</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;700&family=Public+Sans:wght@400;600&display=swap">
 <style>
@@ -54,7 +54,6 @@
     width: 100%;
     height: 2px;
     background: var(--ink);
-    margin-top: 0.1in;
   }
 
   /* --- headline --- */
@@ -77,9 +76,9 @@
 
   /* --- QR --- */
   .qr {
-    width: 2.3in;
-    height: 2.3in;
-    margin-top: 0.26in;
+    width: 2.85in;
+    height: 2.85in;
+    margin-top: 0.3in;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -138,7 +137,6 @@
 </head>
 <body>
   <div class="card">
-    <div class="sig">The Backrow Boys</div>
     <div class="rule"></div>
 
     <h1>Guest<br>Wifi</h1>
@@ -149,18 +147,22 @@
     <div class="network">
       <div class="label">Network</div>
       <div class="ssid">Plastic Labs-Guest</div>
-      <div class="link">backrowboys.fun</div>
     </div>
 
     <div class="foot">
       <div class="seats"><span></span><span></span><span></span></div>
-      <div class="who">Matt · Aakash · Marc — row 3</div>
     </div>
   </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script>
-  var payload = "http://backrowboys.fun";
+  var WIFI = {
+    ssid: "Plastic Labs-Guest",
+    password: "Carwash-Shriek-Petite-Underarm-Renewable",
+    security: "WPA"
+  };
+  function esc(s) { return String(s).replace(/([\\;,:"])/g, "\\$1"); }
+  var payload = "WIFI:T:" + WIFI.security + ";S:" + esc(WIFI.ssid) + ";P:" + esc(WIFI.password) + ";;";
   var qr = qrcode(0, "H");   // high error correction — it's going on a wall
   qr.addData(payload);
   qr.make();
